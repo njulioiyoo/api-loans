@@ -1,0 +1,19 @@
+includes:
+    - vendor/phpstan/phpstan-mockery/extension.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+        - config
+        - public
+    excludePaths:
+        - tests/**
+    stubFiles:
+        - stubs/Model.stub
+        - stubs/EloquentBuilder.stub
+        - stubs/QueryBuilder.stub
+    bootstrapFiles:
+        - vendor/autoload.php
+    reportMaybesInPropertyPhpDocTypes: false
+    treatPhpDocTypesAsCertain: true

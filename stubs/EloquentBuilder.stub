@@ -1,0 +1,8 @@
+<?php
+
+namespace Illuminate\Database\Eloquent;
+
+class Builder
+{
+    // You can add method stubs here if needed
+}

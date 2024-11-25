@@ -1,0 +1,5 @@
+<?php
+
+namespace Illuminate\Database\Query;
+
+class Builder {}

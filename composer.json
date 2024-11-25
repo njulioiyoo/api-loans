@@ -1,0 +1,43 @@
+{
+  "name": "jnpro/loan-project",
+  "description": "This application provides a simple API for managing loan applications with validation features. Follow the steps below to set up, run the application, and execute unit tests.",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Julio Notodiprodyo",
+      "email": "njulioiyoo@gmail.com"
+    }
+  ],
+  "require": {
+    "slim/slim": "^4.14.0",
+    "illuminate/database": "^v11.30.0",
+    "slim/psr7": "^1.7.0",
+    "php-di/php-di": "^7.0.7",
+    "php-di/slim-bridge": "^3.4.0",
+    "slim/http": "^1.4.0",
+    "monolog/monolog": "^3.7.0",
+    "respect/validation": "^2.3"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^2.0.1",
+    "mockery/mockery": "^1.6.12",
+    "friendsofphp/php-cs-fixer": "^v3.64.0",
+    "phpstan/phpstan-mockery": "^2.0.0",
+    "phpunit/phpunit": "^11.4"
+  },
+  "scripts": {
+    "fix": "vendor/bin/php-cs-fixer fix",
+    "lint": "vendor/bin/phpstan analyze -c phpstan.neon",
+    "start": [
+      "Composer\\Config::disableProcessTimeout",
+      "php -S localhost:8080 -t public"
+    ],
+    "test": "pest"
+  }
+}

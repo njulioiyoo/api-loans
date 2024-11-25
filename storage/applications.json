@@ -1,0 +1,11 @@
+[
+    {
+        "name": "John Doe",
+        "ktp": "1234561501851238",
+        "loan_amount": 5000,
+        "loan_period": 12,
+        "loan_purpose": "renovation",
+        "date_of_birth": "1985-01-15",
+        "sex": "male"
+    }
+]
