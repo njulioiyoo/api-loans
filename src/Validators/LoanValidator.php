@@ -9,9 +9,9 @@ class LoanValidator
     /**
      * Validates the given loan application data according to predefined rules.
      *
-     * @param array $data The loan application data to be validated.
-     * @return array An array of validation errors, where keys are field names
-     * and values are error messages. Returns an empty array if validation passes.
+     * @param array<string, mixed> $data The loan application data to be validated.
+     * @return array<string, string> An array of validation errors, where keys are field names
+     *                               and values are error messages. Returns an empty array if validation passes.
      */
     public function validate(array $data): array
     {
@@ -23,7 +23,16 @@ class LoanValidator
                 ->regex('/^\S+\s+\S+/') // At least two names (separated by spaces)
                 ->setName('Full Name'),
             'ktp' => v::callback(function ($value) use ($data) {
-                return $this->validateKTP($value, $data['sex'] ?? null, $data['date_of_birth'] ?? null);
+                $sex = $data['sex'] ?? null;
+                $dob = $data['date_of_birth'] ?? null;
+
+                // Pastikan `$sex` dan `$dob` sesuai tipe yang diharapkan
+                if ((!is_string($sex) && $sex !== null) || (!is_string($dob) && $dob !== null)) {
+                    return false;
+                }
+
+                // Validasi KTP
+                return $this->validateKTP((string)$value, $sex, $dob);
             })->setName('KTP'),
             'loan_amount' => v::intVal()->between(1000, 10000),
             'loan_purpose' => v::regex('/\b( |renovation|electronics|wedding|rent|car|investment)\b/i'),
@@ -68,16 +77,16 @@ class LoanValidator
             return false;
         }
 
-        $ktpDay = (int)substr($ktp, 6, 2);
-        $ktpMonth = (int)substr($ktp, 8, 2);
-        $ktpYear = (int)substr($ktp, 10, 2);
-
-        // Adjust day for females
+        $day = (int)$day;
         if ($sex === 'female') {
             $day += 40;
         }
 
+        $ktpDay = (int)substr((string)$ktp, 6, 2);
+        $ktpMonth = (int)substr((string)$ktp, 8, 2);
+        $ktpYear = (int)substr((string)$ktp, 10, 2);
+
         // Match extracted values
-        return $ktpDay === (int)$day && $ktpMonth === (int)$month && $ktpYear === (int)substr($year, -2);
+        return $ktpDay === $day && $ktpMonth === (int)$month && $ktpYear === (int)substr($year, -2);
     }
 }
